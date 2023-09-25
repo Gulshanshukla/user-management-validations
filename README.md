@@ -133,6 +133,8 @@ The project database design includes tables for user management ,with fields suc
 * userName:(userName)
 * userPhoneNumber:(userPhoneNumber)
 * userAddress:(userAddress)
+* userDOB:(userDOB)
+* userEmail:(userEmail)
   ***
 ### Data Structure Used
 * user Class: Defines the structure for user data,including users attributes.
