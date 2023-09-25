@@ -32,7 +32,7 @@ records,such as adding ,retrieving,updating ,and deteting user information.
   It defines API  endpoints for thev following operations.
  * Add user: `POST/User`
  * Add Users: `POST/Users`
- * Get All Users: `GET/AllUsers`
+ * Get All Users: `GET/Users`
  * Get User by ID: `GET/User/{UserId}`
  * Update User name: `PUT/update/id/{id}/username`
  * Update user Address: `PUT/update/id/{id}/useraddress`
@@ -143,7 +143,8 @@ The project database design includes tables for user management ,with fields suc
   * clean code separation with a layered architechture(UserController,BeanBagRepository).
   * Robust error handling for improve reliability.
   * java based backend framework(Spring boot) and maven  for build management.
-  * Beginner friendly 
+  * Beginner friendly
+  * validation performing the data integrity.
   
 
 
