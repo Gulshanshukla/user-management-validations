@@ -28,6 +28,19 @@ public class Usercontroller {
     {
         return userservice.addnewusers(newusers);
     }
+    @DeleteMapping("user/id{id}")
+    public void deleteUser(@RequestParam Integer userId) {
+        userservice.deleteUserById(userId);
+    }
+    @PutMapping("update/user/id/{id}")
+    public User updateUser(@RequestParam Integer userId, @RequestBody User updatedUser) {
+        User user = userservice.updateUserById(userId, updatedUser);
+        if (user == null) {
+            // You can throw an exception or handle the "user not found" case here
+        }
+        return user;
+    }
+
 
 
 

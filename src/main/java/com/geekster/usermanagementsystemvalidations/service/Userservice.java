@@ -23,4 +23,23 @@ public class Userservice {
     }
 
 
+    public void deleteUserById(Integer userId) {
+        List<User> users = userrepo.getUserList();
+        users.removeIf(user -> user.getUserId().equals(userId));
+    }
+
+    public User updateUserById(Integer userId, User updatedUser) {
+        List<User> users = userrepo.getUserList();
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                user.setUserName(updatedUser.getUserName());
+                user.setUserEmail(updatedUser.getUserEmail());
+                user.setUserDOB(updatedUser.getUserDOB());
+                user.setUserContactNo(updatedUser.getUserContactNo());
+                // Add more update logic as needed
+                return user;
+            }
+        }
+        return null;
+    }
 }
