@@ -34,8 +34,8 @@ records,such as adding ,retrieving,updating ,and deteting user information.
  * Add Users: `POST/Users`
  * Get All Users: `GET/Users`
  * Get User by ID: `GET/User/{UserId}`
- * Update User name: `PUT/update/id/{id}/username`
- * Update user Address: `PUT/update/id/{id}/useraddress`
+ * Update User by ID: `PUT/update//user/id/{id}/`
+ * Update user Name: `PUT/update/id/{id}/username`
  * Delete user by Id: `DELETE/delete/id/{id}`
  ``` java
 @RestController
@@ -74,41 +74,22 @@ public class UserController {
         return "invalid user id";
     }
     //updating user information
-    @PutMapping("update/id/{id}/useraddress")
-    public String setuserAddressbyid(@PathVariable Integer id, @RequestParam String value)
-    {
-        for(User user:UserList)
-        {
-            if(user.getUserId().equals(id))
-            {
-                user.setAddress(value);
-                {
-                    return  "user address:"   + id +  "updated to"  +  value;
-                }
-            }
-
+    @PutMapping("update/user/id/{id}")
+    public User updateUser(@RequestParam Integer userId, @RequestBody User updatedUser) {
+        User user = userservice.updateUserById(userId, updatedUser);
+        if (user == null) {
+            // You can throw an exception or handle the "user not found" case here
         }
-        return "invalid user id";
+        return user;
     }
+  
 
 
 
     //delete user
-    @DeleteMapping("delete/id/{id}")
-    public String removeUserById(@PathVariable Integer id)
-    {
-        for(User user : UserList)
-        {
-            if(user.getUserId().equals(id))
-            {
-                UserList.remove(user);
-                return "user: "   + id  + " deleted";
-            }
-        }
-
-
-
-        return "Invalid id";
+      @DeleteMapping("user/id{id}")
+    public void deleteUser(@RequestParam Integer userId) {
+        userservice.deleteUserById(userId);
     }
 
 
@@ -126,6 +107,46 @@ public class BeanBag {
         return new ArrayList<>();
     }
 }
+```
+## Service
+``` java
+@Service
+
+public class Userservice {
+    @Autowired
+    UserRepo userrepo;
+
+    public String addnewusers(List<User> newusers) {
+        getAllUsers().addAll(newusers);
+        return newusers.size() + "user were added";
+    }
+
+    public List<User> getAllUsers() {
+        return userrepo.getUserList();
+    }
+
+
+    public void deleteUserById(Integer userId) {
+        List<User> users = userrepo.getUserList();
+        users.removeIf(user -> user.getUserId().equals(userId));
+    }
+
+    public User updateUserById(Integer userId, User updatedUser) {
+        List<User> users = userrepo.getUserList();
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                user.setUserName(updatedUser.getUserName());
+                user.setUserEmail(updatedUser.getUserEmail());
+                user.setUserDOB(updatedUser.getUserDOB());
+                user.setUserContactNo(updatedUser.getUserContactNo());
+                // Add more update logic as needed
+                return user;
+            }
+        }
+        return null;
+    }
+}
+
 ```
 ### Database Design
 The project database design includes tables for user management ,with fields such as :
